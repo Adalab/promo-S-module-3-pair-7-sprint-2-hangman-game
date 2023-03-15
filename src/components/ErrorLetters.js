@@ -1,25 +1,26 @@
 //import "../styles/components/letters"
 
-const ErrorLetters = ({word, userLetters}) => {
-    
-    const renderErrorLetters = () => {
-        /*filtersLetter = userLetters.filter((letter) => (
-        !word.includes(letter)
-        ))
-        return filtersLetter.map ((filterLetter, index) => {
-            return <li key={index} className="letter">{filterLetter}</li>
-        })
-        */
-    }
+const ErrorLetters = ({ lettersWrong }) => {
 
+  const renderErrorLetters = () => {
+    return (
+      lettersWrong
+        // .filter((letterWrong) => {
+        //   return !letterWrong.includes(lettersWrong)
+        // })
+
+
+        .map((letterWrong, index) => {
+          return <li key={index} className="letter">{letterWrong}</li>
+        }))
+  }
   return (
     <div className="error">
-        <h2 className="title">Letras falladas:</h2>
-        <ul className="letters">
-            {renderErrorLetters()}
-        </ul>
+      <h2 className="title">Letras falladas:</h2>
+      <ul className="letters">
+        {renderErrorLetters()}
+      </ul>
     </div>
   )
 }
-
 export default ErrorLetters

@@ -5,13 +5,12 @@ import Header from './Header';
 import Dummy from './Dummy';
 import SolutionLetters from './SolutionLetters';
 import ErrorLetters from './ErrorLetters';
+import Form from './Form';
 
 function App() {
-  let [numberOfErrors, setNumberOfErrors] = useState(0);
   const [lastLetter, setLastLetter] = useState('');
   const [word, setWord] = useState('');
-  const [userLetters, setUserLetters] = useState([]);
-  let filtersLetter  = [];
+  const [userLetters, setUserLetters] = useState([])
 
   useEffect(() => {
     callToApi().then((response) => {
@@ -19,40 +18,34 @@ function App() {
     })
   }, [])
 
-  const handleLetter = (event) => {
-    const letterValue = event.target.value;
-    const includesLetter = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]*$/g ;
-    console.log(letterValue.search(includesLetter));
-    if(letterValue.search(includesLetter)!== -1) {
-      setLastLetter(letterValue);
-      setUserLetters([...userLetters,letterValue]);
+  const handleLetter = (value) => {
+
+    const includesLetter = /^[a-zA-ZÀ-ÿ\u00f1\u00d1]*$/g;
+    console.log(value.search(includesLetter));
+    if (value.search(includesLetter) !== -1) {
+      setLastLetter(value);
+      setUserLetters([...userLetters, value]);
     }
   }
 
-const letrasFalladas= userLetters.filter(l => !word.includes(l));
-console.log(letrasFalladas.length);
-  return  (
+  const lettersWrong = userLetters.filter(userLetter => !word.includes(userLetter));
+
+
+
+  return (
     <div className="page">
       <Header />
       <main className="main">
         <section>
           <SolutionLetters word={word} userLetters={userLetters} />
-          <ErrorLetters word={word} userLetters={userLetters} />
-          <form className="form">
-            <label className="title" htmlFor="last-letter">Escribe una letra:</label>
-            <input
-              autocomplete="off"
-              className="form__input"
-              maxlength="1"
-              type="text"
-              name="last-letter"
-              id="last-letter"
-              onChange = {handleLetter}
-              value = {lastLetter}
-            />
-          </form>
+          <ErrorLetters lettersWrong={lettersWrong} />
+          <Form
+            handleOnChange={handleLetter}
+            valueInput={lastLetter}
+          ></Form>
+
         </section>
-        <Dummy numberOfErrors={letrasFalladas.length} />
+        <Dummy numberOfErrors={lettersWrong.length} />
       </main>
     </div>
   );
