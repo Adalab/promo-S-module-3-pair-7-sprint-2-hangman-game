@@ -5,11 +5,7 @@ const ErrorLetters = ({ lettersWrong }) => {
   const renderErrorLetters = () => {
     return (
       lettersWrong
-        // .filter((letterWrong) => {
-        //   return !letterWrong.includes(lettersWrong)
-        // })
-
-
+    
         .map((letterWrong, index) => {
           return <li key={index} className="letter">{letterWrong}</li>
         }))
